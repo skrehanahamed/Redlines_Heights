@@ -1,0 +1,46 @@
+name: 🚀 Feature Request
+description: Suggest an idea or new mechanic for Redline Heights
+title: "[FEATURE]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea for a new vehicle, weapon, mission type, district, or sound effect in **Redline Heights**? Let us know below!
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Vehicle Physics / Models
+        - Weapons & Combat
+        - AI Traffic & Pedestrians
+        - Police Wanted System
+        - World & Map Expansion
+        - Audio & Radio Stations
+        - UI & HUD
+        - Performance Optimization
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to a problem?
+      description: A clear and concise description of what the limitation is.
+      placeholder: "e.g., Police cars currently don't use pit maneuvers..."
+    validations:
+      required: false
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Describe the Solution You'd Like
+      description: Detailed breakdown of the proposed mechanic or feature.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative solutions or workarounds you've thought about.
+    validations:
+      required: false

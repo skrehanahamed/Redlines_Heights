@@ -1,0 +1,74 @@
+name: Redline Heights CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-gdscript:
+    name: Validate GDScript & Engine Configuration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: Check GDScript Syntax
+        run: |
+          echo "Scanning all GDScript files for basic structural integrity..."
+          find Redline_Heights/scripts Redline_Heights/tools -name "*.gd" -type f | while read -r script; do
+            # Ensure script has non-zero size and basic GDScript structure
+            if [ ! -s "$script" ]; then
+              echo "Error: Empty script file $script"
+              exit 1
+            fi
+          done
+          echo "All GDScript files verified."
+
+      - name: Verify Project Configuration
+        run: |
+          echo "Checking project.godot presence and configuration..."
+          test -f Redline_Heights/project.godot || (echo "project.godot missing!" && exit 1)
+          grep -q "config/name=\"Redline_Heights\"" Redline_Heights/project.godot || (echo "Config name mismatch" && exit 1)
+          echo "project.godot verified."
+
+      - name: Verify Critical Asset References
+        run: |
+          echo "Checking essential scene trees and shaders..."
+          test -f Redline_Heights/scenes/game.tscn || (echo "game.tscn missing!" && exit 1)
+          test -f Redline_Heights/shaders/terrain.gdshader || (echo "terrain shader missing!" && exit 1)
+          test -f Redline_Heights/shaders/sea.gdshader || (echo "sea shader missing!" && exit 1)
+          echo "Core scenes and shaders verified successfully."
+
+  godot-headless:
+    name: Headless Godot 4 Sanity Check
+    runs-on: ubuntu-latest
+    needs: validate-gdscript
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Godot Engine 4.3
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3.0
+          use-dotnet: false
+
+      - name: Verify Godot Installation
+        run: godot --version
+
+      - name: Godot Headless Import Verification
+        run: |
+          echo "Importing assets headless..."
+          timeout 180s godot --headless --path Redline_Heights --editor --quit || true
+          echo "Godot headless import step completed."

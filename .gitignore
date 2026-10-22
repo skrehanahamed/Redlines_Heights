@@ -1,0 +1,66 @@
+# ==========================================
+# Redline Heights - .gitignore
+# ==========================================
+
+# Godot 4+ engine cache and imports
+.godot/
+*.translation
+
+# Exported binaries & packages
+*.pck
+*.apk
+*.aab
+*.exe
+*.app/
+*.dmg
+*.zip
+*.tar.gz
+
+# Mono/C# (if applicable)
+.mono/
+[Bb]in/
+[Oo]bj/
+
+# OS-generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE & Editor caches
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.claude/
+
+# Internal developer notes & scratch documents (per repo policy)
+CLAUDE.md
+ASSET_LIST.md
+GAME_REQUIREMENTS.md
+UI_PROMPTS.md
+PROJECT_GUIDE.md
+CREDITS.md
+Redline_Heights/PROJECT_GUIDE.md
+Redline_Heights/CREDITS.md
+Redline_Heights/README.md
+assets/CREDITS.md
+assets/README.md
+
+# Staging / removed scratch asset archives
+removed_assets/
+
+# Temporary test logs and debug runs
+*.log
+*.tmp
+tmp/
+
+# Raw 3D assets exceeding GitHub 100MB limit (kept locally, unused in runtime code)
+Redline_Heights/assets/bridge/american_road_bridge.glb
+Redline_Heights/assets/miami/modern_coastal_hillside_villa.glb
+Redline_Heights/assets/trees/jacaranda_tree.glb
