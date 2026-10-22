@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://djwbyf7d53bv5"
+path="res://.godot/imported/gatve Varniu_3.ogg-de5b6d842f8a5e36c452244377dccbd8.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/oga/high-traffic-road-sounds/gatve Varniu_3.ogg"
+dest_files=["res://.godot/imported/gatve Varniu_3.ogg-de5b6d842f8a5e36c452244377dccbd8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
