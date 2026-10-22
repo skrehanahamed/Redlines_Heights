@@ -7,14 +7,28 @@
 [![Godot Engine](https://img.shields.io/badge/Godot-4.7%2B-478CBF?logo=godotengine&logoColor=white)](https://godotengine.org)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)](#quick-start)
 [![License](https://img.shields.io/badge/Assets-CC0%20%2F%20CC--BY-green.svg)](#licensing--credits)
+[![Release](https://img.shields.io/github/v/release/skrehanahamed/Redlines_Heights?include_prereleases&label=Release&color=blue)](https://github.com/skrehanahamed/Redlines_Heights/releases)
 [![CI](https://github.com/skrehanahamed/Redlines_Heights/actions/workflows/ci.yml/badge.svg)](https://github.com/skrehanahamed/Redlines_Heights/actions/workflows/ci.yml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 **An open-world retro 3D crime action and driving game inspired by classic PS2 era titles, built with Godot 4 and GDScript.**
 
-[Features](#game-features) • [Screenshots](#screenshots) • [Controls](#controls) • [Quick Start](#quick-start) • [Architecture](#project-architecture) • [Web Showcase](#3d-asset-studio-web-viewer)
+[Downloads](#download--play) • [Features](#game-features) • [Screenshots](#screenshots) • [Controls](#controls) • [Quick Start](#quick-start) • [Architecture](#project-architecture) • [Web Showcase](#3d-asset-studio-web-viewer)
 
 </div>
+
+---
+
+## Download & Play
+
+Pre-compiled ready-to-play packages are generated automatically for all major platforms on every release:
+
+- **Windows**: Download `RedlineHeights-Windows-x86_64.zip`, extract, and launch `RedlineHeights.exe`.
+- **Linux**: Download `RedlineHeights-Linux-x86_64.zip`, extract, make executable (`chmod +x RedlineHeights.x86_64`), and run.
+- **macOS**: Download `RedlineHeights-macOS-Universal.zip`, extract, and launch `RedlineHeights.app`.
+- **Web**: Play online in browser or extract `RedlineHeights-Web.zip` to any static web host.
+
+Visit the [Releases Page](https://github.com/skrehanahamed/Redlines_Heights/releases) to download the latest builds.
 
 ---
 

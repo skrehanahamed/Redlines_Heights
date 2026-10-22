@@ -1,0 +1,158 @@
+name: Build & Release All Platforms
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      create_release:
+        description: 'Publish as GitHub Release with attached game binaries'
+        required: true
+        type: boolean
+        default: true
+      version_tag:
+        description: 'Release version tag (e.g. v1.0.0)'
+        required: false
+        default: 'v1.0.0'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  export-all-platforms:
+    name: Export & Package Game
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: Setup Godot Engine 4.3
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3.0
+          use-dotnet: false
+
+      - name: Install Godot Export Templates
+        run: |
+          echo "Downloading official Godot 4.3 export templates..."
+          mkdir -p ~/.local/share/godot/export_templates/4.3.stable
+          curl -fsSL https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz -o /tmp/templates.tpz
+          unzip -q /tmp/templates.tpz -d /tmp/templates_extract
+          mv /tmp/templates_extract/templates/* ~/.local/share/godot/export_templates/4.3.stable/
+          rm -rf /tmp/templates.tpz /tmp/templates_extract
+          echo "Templates successfully installed:"
+          ls -lh ~/.local/share/godot/export_templates/4.3.stable/
+
+      - name: Prepare Build Directories
+        run: |
+          mkdir -p build/windows build/linux build/macos build/web packages
+
+      - name: Export for Windows Desktop (64-bit)
+        run: |
+          echo "Building Windows release..."
+          godot --headless --path Redline_Heights --export-release "Windows Desktop" ../build/windows/RedlineHeights.exe
+          cd build/windows
+          zip -r ../../packages/RedlineHeights-Windows-x86_64.zip .
+          cd ../..
+
+      - name: Export for Linux (x86_64)
+        run: |
+          echo "Building Linux release..."
+          godot --headless --path Redline_Heights --export-release "Linux/X11" ../build/linux/RedlineHeights.x86_64
+          cd build/linux
+          chmod +x RedlineHeights.x86_64
+          zip -r ../../packages/RedlineHeights-Linux-x86_64.zip .
+          cd ../..
+
+      - name: Export for macOS (Universal)
+        run: |
+          echo "Building macOS release..."
+          godot --headless --path Redline_Heights --export-release "macOS" ../build/macos/RedlineHeights.zip
+          cp build/macos/RedlineHeights.zip packages/RedlineHeights-macOS-Universal.zip
+
+      - name: Export for Web (HTML5 / WebAssembly)
+        run: |
+          echo "Building Web HTML5 release..."
+          godot --headless --path Redline_Heights --export-release "Web" ../build/web/index.html
+          cd build/web
+          zip -r ../../packages/RedlineHeights-Web.zip .
+          cd ../..
+
+      - name: Verify Export Packages
+        run: |
+          echo "Generated packages:"
+          ls -lh packages/
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RedlineHeights-Windows-x86_64
+          path: packages/RedlineHeights-Windows-x86_64.zip
+          retention-days: 30
+
+      - name: Upload Linux Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RedlineHeights-Linux-x86_64
+          path: packages/RedlineHeights-Linux-x86_64.zip
+          retention-days: 30
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RedlineHeights-macOS-Universal
+          path: packages/RedlineHeights-macOS-Universal.zip
+          retention-days: 30
+
+      - name: Upload Web Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RedlineHeights-Web
+          path: packages/RedlineHeights-Web.zip
+          retention-days: 30
+
+      - name: Determine Release Tag
+        id: tag_info
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ github.event.inputs.version_tag }}"
+          else
+            TAG="${{ github.ref_name }}"
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/') || github.event.inputs.create_release == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag_info.outputs.tag }}
+          name: "Redline Heights ${{ steps.tag_info.outputs.tag }}"
+          body: |
+            ### Play Redline Heights
+
+            Pre-compiled game builds for all supported platforms:
+
+            - **Windows**: `RedlineHeights-Windows-x86_64.zip` (Extract and run `RedlineHeights.exe`)
+            - **Linux**: `RedlineHeights-Linux-x86_64.zip` (Extract, `chmod +x RedlineHeights.x86_64`, and run)
+            - **macOS**: `RedlineHeights-macOS-Universal.zip` (Extract and launch `RedlineHeights.app`)
+            - **Web**: `RedlineHeights-Web.zip` (Host on any static web server or itch.io)
+
+            Built automatically with Godot 4.3 and GitHub Actions.
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            packages/RedlineHeights-Windows-x86_64.zip
+            packages/RedlineHeights-Linux-x86_64.zip
+            packages/RedlineHeights-macOS-Universal.zip
+            packages/RedlineHeights-Web.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
