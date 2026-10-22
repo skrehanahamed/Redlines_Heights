@@ -38,7 +38,7 @@ jobs:
         run: |
           echo "Checking project.godot presence and configuration..."
           test -f Redline_Heights/project.godot || (echo "project.godot missing!" && exit 1)
-          grep -q "config/name=\"Redline_Heights\"" Redline_Heights/project.godot || (echo "Config name mismatch" && exit 1)
+          grep -q 'config/name="Redline Heights"' Redline_Heights/project.godot || (echo "Config name mismatch" && exit 1)
           echo "project.godot verified."
 
       - name: Verify Critical Asset References
