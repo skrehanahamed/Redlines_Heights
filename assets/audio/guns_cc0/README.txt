@@ -1,0 +1,1 @@
+Selected gun sounds from "The Free Firearm Sound Library" (CC0) - https://opengameart.org/content/the-free-firearm-sound-library - converted to MP3. 10 guns x up to 4 shots: pistols (1911, Walther PPQ), revolver (S&W 642), shotguns (Mossberg, Nova), SMGs (Carl Gustav M45, PPSh), rifles (AR-15, AK-47, SKS).

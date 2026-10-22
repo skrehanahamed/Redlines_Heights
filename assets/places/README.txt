@@ -1,0 +1,1 @@
+Gas station, bus stop, metro station: PSX-style scenes by Elbolilloduro (itch.io). Models CC0 per author; textures partly from Textures.com - licence unclear, development use only (see characters/README.md).

@@ -1,0 +1,3 @@
+PSX town/shop/building scenes by Elbolilloduro (https://elbolilloduro.itch.io). Each FBX is a whole scene (many separate building meshes inside) - instance it and pick child nodes, or split in the editor.
+Licence: models CC0 per author, but some textures come from Textures.com (not redistributable by default) and Sketchfab shows CC-BY for some - DEVELOPMENT USE ONLY until confirmed with the author.
+CONTENT: buildings = 11 brick city buildings with shopfronts; pizzeria / tacos = whole mini towns; house = suburban estate; 6twelve, burgerpiz, diner, vhs_shop, laundry, quequis_house, abandoned_house, trailer_park = single places; trees / vegetation = plants and rocks; houses_on_water = stilt houses (textures missing in my test, assign by hand).

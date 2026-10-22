@@ -1,0 +1,27 @@
+#
+## Alias OBJ Material File
+# Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
+
+newmtl Granite_Light_Gray
+Ka 0.000000 0.000000 0.000000
+Kd 0.584314 0.580392 0.564706
+Ks 0.330000 0.330000 0.330000
+map_Kd RoadPieces/Granite_Light_Gray.jpg
+
+newmtl Carpet_Plush_Charcoal
+Ka 0.000000 0.000000 0.000000
+Kd 0.341176 0.341176 0.341176
+Ks 0.330000 0.330000 0.330000
+map_Kd RoadPieces/Carpet_Plush_Charcoal.jpg
+
+newmtl Formica_Graystone
+Ka 0.000000 0.000000 0.000000
+Kd 0.584314 0.572549 0.529412
+Ks 0.330000 0.330000 0.330000
+map_Kd RoadPieces/Formica_Graystone.jpg
+
+newmtl Color_D04
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 0.800000 0.196078
+Ks 0.330000 0.330000 0.330000
+
